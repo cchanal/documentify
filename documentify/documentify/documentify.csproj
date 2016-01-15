@@ -198,8 +198,10 @@
     <Compile Include="Models\sous_section.cs">
       <DependentUpon>documentifyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Validation\projectValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\HomePageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

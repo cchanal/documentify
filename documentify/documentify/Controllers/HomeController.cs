@@ -1,4 +1,5 @@
 ﻿using documentify.Models;
+using documentify.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,12 @@ namespace documentify.Controllers
         private documentifyDataEntities db = new documentifyDataEntities();
         public ActionResult Index()
         {
+            HomePageViewModel model = new HomePageViewModel();
             IEnumerable<projet> projet = new List<projet>();
             projet = db.projets.ToList();
-            return View(projet);
+            model.projets = projet;
+
+            return View(model);
         }
 
         public ActionResult About()

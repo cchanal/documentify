@@ -52,7 +52,8 @@ namespace documentify.Controllers
             {
                 db.projets.Add(projet);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             return View(projet);
