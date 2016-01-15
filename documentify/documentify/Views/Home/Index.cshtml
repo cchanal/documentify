@@ -2,7 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron card">
-    <h1>Product Name</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, doloribus.</p>
+<div class="card">
+    @Html.ActionLink("Créer", "Index", "projets", new object { }, new { @class = "btn btn-primary" })
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Aucun</td>
+        </tr>
+    </table>
 </div>
