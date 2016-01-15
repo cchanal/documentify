@@ -1,0 +1,51 @@
+﻿@model IEnumerable<documentify.Models.sous_section>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.titre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.contenu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ordre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.section.titre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.contenu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ordre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.section.titre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_sous_section }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_sous_section }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_sous_section })
+        </td>
+    </tr>
+}
+
+</table>

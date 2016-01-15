@@ -1,0 +1,50 @@
+﻿@model documentify.Models.sous_section
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sous_section</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contenu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contenu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ordre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ordre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.section.titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.section.titre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_sous_section }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

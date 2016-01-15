@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="documentifyDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="page">
+          <Key>
+            <PropertyRef Name="id_page" />
+          </Key>
+          <Property Name="id_page" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="numero" Type="int" Nullable="false" />
+          <Property Name="id_projet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="projet">
+          <Key>
+            <PropertyRef Name="id_projet" />
+          </Key>
+          <Property Name="id_projet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" />
+        </EntityType>
+        <EntityType Name="section">
+          <Key>
+            <PropertyRef Name="id_section" />
+          </Key>
+          <Property Name="id_section" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="contenu" Type="text" Nullable="false" />
+          <Property Name="ordre" Type="int" Nullable="false" />
+          <Property Name="id_page" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sous_section">
+          <Key>
+            <PropertyRef Name="id_sous_section" />
+          </Key>
+          <Property Name="id_sous_section" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_section" Type="int" Nullable="false" />
+          <Property Name="titre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="contenu" Type="text" Nullable="false" />
+          <Property Name="ordre" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_page_projet">
+          <End Role="projet" Type="Self.projet" Multiplicity="1" />
+          <End Role="page" Type="Self.page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projet">
+              <PropertyRef Name="id_projet" />
+            </Principal>
+            <Dependent Role="page">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_section_page">
+          <End Role="page" Type="Self.page" Multiplicity="1" />
+          <End Role="section" Type="Self.section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="page">
+              <PropertyRef Name="id_page" />
+            </Principal>
+            <Dependent Role="section">
+              <PropertyRef Name="id_page" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sous_section_section">
+          <End Role="section" Type="Self.section" Multiplicity="1" />
+          <End Role="sous_section" Type="Self.sous_section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="section">
+              <PropertyRef Name="id_section" />
+            </Principal>
+            <Dependent Role="sous_section">
+              <PropertyRef Name="id_section" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="documentifyDataModelStoreContainer">
+          <EntitySet Name="page" EntityType="Self.page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projet" EntityType="Self.projet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="section" EntityType="Self.section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sous_section" EntityType="Self.sous_section" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_page_projet" Association="Self.FK_page_projet">
+            <End Role="projet" EntitySet="projet" />
+            <End Role="page" EntitySet="page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_section_page" Association="Self.FK_section_page">
+            <End Role="page" EntitySet="page" />
+            <End Role="section" EntitySet="section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sous_section_section" Association="Self.FK_sous_section_section">
+            <End Role="section" EntitySet="section" />
+            <End Role="sous_section" EntitySet="sous_section" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="documentifyDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="page">
+          <Key>
+            <PropertyRef Name="id_page" />
+          </Key>
+          <Property Name="id_page" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="Int32" Nullable="false" />
+          <Property Name="id_projet" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="projet" Relationship="Self.FK_page_projet" FromRole="page" ToRole="projet" />
+          <NavigationProperty Name="sections" Relationship="Self.FK_section_page" FromRole="page" ToRole="section" />
+        </EntityType>
+        <EntityType Name="projet">
+          <Key>
+            <PropertyRef Name="id_projet" />
+          </Key>
+          <Property Name="id_projet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pages" Relationship="Self.FK_page_projet" FromRole="projet" ToRole="page" />
+        </EntityType>
+        <EntityType Name="section">
+          <Key>
+            <PropertyRef Name="id_section" />
+          </Key>
+          <Property Name="id_section" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ordre" Type="Int32" Nullable="false" />
+          <Property Name="id_page" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="page" Relationship="Self.FK_section_page" FromRole="section" ToRole="page" />
+          <NavigationProperty Name="sous_section" Relationship="Self.FK_sous_section_section" FromRole="section" ToRole="sous_section" />
+        </EntityType>
+        <EntityType Name="sous_section">
+          <Key>
+            <PropertyRef Name="id_sous_section" />
+          </Key>
+          <Property Name="id_sous_section" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_section" Type="Int32" Nullable="false" />
+          <Property Name="titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ordre" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="section" Relationship="Self.FK_sous_section_section" FromRole="sous_section" ToRole="section" />
+        </EntityType>
+        <Association Name="FK_page_projet">
+          <End Role="projet" Type="Self.projet" Multiplicity="1" />
+          <End Role="page" Type="Self.page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projet">
+              <PropertyRef Name="id_projet" />
+            </Principal>
+            <Dependent Role="page">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_section_page">
+          <End Role="page" Type="Self.page" Multiplicity="1" />
+          <End Role="section" Type="Self.section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="page">
+              <PropertyRef Name="id_page" />
+            </Principal>
+            <Dependent Role="section">
+              <PropertyRef Name="id_page" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sous_section_section">
+          <End Role="section" Type="Self.section" Multiplicity="1" />
+          <End Role="sous_section" Type="Self.sous_section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="section">
+              <PropertyRef Name="id_section" />
+            </Principal>
+            <Dependent Role="sous_section">
+              <PropertyRef Name="id_section" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="documentifyDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pages" EntityType="Self.page" />
+          <EntitySet Name="projets" EntityType="Self.projet" />
+          <EntitySet Name="sections" EntityType="Self.section" />
+          <EntitySet Name="sous_section" EntityType="Self.sous_section" />
+          <AssociationSet Name="FK_page_projet" Association="Self.FK_page_projet">
+            <End Role="projet" EntitySet="projets" />
+            <End Role="page" EntitySet="pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_section_page" Association="Self.FK_section_page">
+            <End Role="page" EntitySet="pages" />
+            <End Role="section" EntitySet="sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sous_section_section" Association="Self.FK_sous_section_section">
+            <End Role="section" EntitySet="sections" />
+            <End Role="sous_section" EntitySet="sous_section" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="documentifyDataModelStoreContainer" CdmEntityContainer="documentifyDataEntities">
+          <EntitySetMapping Name="pages">
+            <EntityTypeMapping TypeName="documentifyDataModel.page">
+              <MappingFragment StoreEntitySet="page">
+                <ScalarProperty Name="id_page" ColumnName="id_page" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="id_projet" ColumnName="id_projet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projets">
+            <EntityTypeMapping TypeName="documentifyDataModel.projet">
+              <MappingFragment StoreEntitySet="projet">
+                <ScalarProperty Name="id_projet" ColumnName="id_projet" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sections">
+            <EntityTypeMapping TypeName="documentifyDataModel.section">
+              <MappingFragment StoreEntitySet="section">
+                <ScalarProperty Name="id_section" ColumnName="id_section" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="contenu" ColumnName="contenu" />
+                <ScalarProperty Name="ordre" ColumnName="ordre" />
+                <ScalarProperty Name="id_page" ColumnName="id_page" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sous_section">
+            <EntityTypeMapping TypeName="documentifyDataModel.sous_section">
+              <MappingFragment StoreEntitySet="sous_section">
+                <ScalarProperty Name="id_sous_section" ColumnName="id_sous_section" />
+                <ScalarProperty Name="id_section" ColumnName="id_section" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="contenu" ColumnName="contenu" />
+                <ScalarProperty Name="ordre" ColumnName="ordre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
