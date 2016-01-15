@@ -14,9 +14,11 @@ namespace documentify.Controllers
         public ActionResult Index()
         {
             HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<projet> projet = new List<projet>();
-            projet = db.projets.ToList();
-            model.projets = projet;
+            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel { 
+                projet = p,
+                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString()
+            }).ToList();
+            model.projets = projets;
 
             return View(model);
         }

@@ -6,9 +6,9 @@ using System.Web;
 
 namespace documentify.ViewModel
 {
-    public class HomePageViewModel
+    public class ProjetViewModel
     {
-        public IEnumerable<ProjetViewModel> projets = new List<ProjetViewModel>();
         public projet projet = new projet();
+        public string projet_homepage_url;
     }
 }
