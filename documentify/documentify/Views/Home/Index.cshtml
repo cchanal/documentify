@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<documentify.Models.projet>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -9,8 +11,12 @@
             <th>Nom</th>
             <th>Description</th>
         </tr>
-        <tr>
-            <td>Aucun</td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.nom</td>
+                <td>@item.description</td>
+            </tr>
+        }
     </table>
 </div>

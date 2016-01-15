@@ -1,4 +1,5 @@
-﻿using System;
+﻿using documentify.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,12 @@ namespace documentify.Controllers
 {
     public class HomeController : Controller
     {
+        private documentifyDataEntities db = new documentifyDataEntities();
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<projet> projet = new List<projet>();
+            projet = db.projets.ToList();
+            return View(projet);
         }
 
         public ActionResult About()
