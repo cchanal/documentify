@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using documentify.Models;
+using documentify.ViewModel;
 
 namespace documentify.Controllers
 {
@@ -56,7 +57,13 @@ namespace documentify.Controllers
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
 
-            return View(projet);
+            HomePageViewModel model = new HomePageViewModel();
+            IEnumerable<projet> projets = new List<projet>();
+            projets = db.projets.ToList();
+            model.projets = projets;
+            model.projet = projet;
+
+            return View(model);
         }
 
         // GET: projets/Edit/5

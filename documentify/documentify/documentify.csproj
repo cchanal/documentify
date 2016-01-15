@@ -230,6 +230,7 @@
       <LastGenOutput>documentifyModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -291,6 +292,7 @@
     <Content Include="Views\sous_section\Details.cshtml" />
     <Content Include="Views\sous_section\Edit.cshtml" />
     <Content Include="Views\sous_section\Index.cshtml" />
+    <Content Include="Views\Home\ProjectPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

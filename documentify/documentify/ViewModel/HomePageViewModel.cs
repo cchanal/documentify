@@ -10,5 +10,6 @@ namespace documentify.ViewModel
     {
         public IEnumerable<projet> projets = new List<projet>();
         public projet projet = new projet();
+        public bool? validation = null;
     }
 }

@@ -25,17 +25,16 @@
     </header>
     <div class="container-fluid main">
         <div class="row">
-            @RenderBody()
-            
+            @RenderBody()            
         </div>
-    </div>
+    </div>  
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
     <footer>
         <div class="container-fluid">
             <p>Documention generated with Documentify</p>
         </div>
     </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
