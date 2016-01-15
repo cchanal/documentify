@@ -115,7 +115,10 @@ namespace documentify.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             section section = db.sections.Find(id);
+
+            section.sous_section.ToList().ForEach(x => db.sous_section.Remove(x));
             db.sections.Remove(section);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

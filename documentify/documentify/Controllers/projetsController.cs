@@ -110,7 +110,12 @@ namespace documentify.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             projet projet = db.projets.Find(id);
+
+            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => y.sous_section.ToList().ForEach(z => db.sous_section.Remove(z))));
+            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => db.sections.Remove(y)));
+            projet.pages.ToList().ForEach(x => db.pages.Remove(x));
             db.projets.Remove(projet);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

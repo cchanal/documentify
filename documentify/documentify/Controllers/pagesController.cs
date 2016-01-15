@@ -115,11 +115,14 @@ namespace documentify.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             page page = db.pages.Find(id);
+
+            page.sections.ToList().ForEach(x => x.sous_section.ToList().ForEach(y => db.sous_section.Remove(y)));
+            page.sections.ToList().ForEach(x => db.sections.Remove(x));
             db.pages.Remove(page);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
