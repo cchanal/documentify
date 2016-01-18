@@ -16,7 +16,8 @@ namespace documentify.Controllers
             HomePageViewModel model = new HomePageViewModel();
             IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel { 
                 projet = p,
-                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString()
+                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
+                deletion_url = "/projets/Delete/" + p.id_projet
             }).ToList();
             model.projets = projets;
 
@@ -48,8 +49,11 @@ namespace documentify.Controllers
 
                 projets = db.projets.Select(p => new ProjetViewModel
                 {
-                    projet = p
+                    projet = p,
+                    projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
+                    deletion_url = "/projets/Delete/" + p.id_projet
                 }).ToList();
+
                 model.projets = projets;
                 model.validation = true;
                 //return RedirectToAction("Index");

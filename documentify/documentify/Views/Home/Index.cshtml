@@ -17,7 +17,11 @@
             <tr>
                 <td>@item.projet.nom</td>
                 <td>@item.projet.description</td>
-                <td><a href="@item.projet_homepage_url">Voir</a></td>
+                <td>
+                    <a href="@item.projet_homepage_url">Voir</a>
+                    |
+                    <a href="@item.deletion_url">Supprimer</a>
+                </td>
             </tr>
         }
     </table>

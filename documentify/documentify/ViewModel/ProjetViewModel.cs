@@ -10,5 +10,6 @@ namespace documentify.ViewModel
     {
         public projet projet = new projet();
         public string projet_homepage_url;
+        public string deletion_url;
     }
 }
