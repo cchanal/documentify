@@ -31,7 +31,7 @@ namespace documentify.Controllers
         public ActionResult CreateProject([Bind(Include = "id_projet,nom,description")] projet projet)
         {
             HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<projet> projets = new List<projet>();
+            IEnumerable<ProjetViewModel> projets = new List<ProjetViewModel>();
 
             if (ModelState.IsValid)
             {
@@ -46,7 +46,10 @@ namespace documentify.Controllers
 
                 db.SaveChanges();
 
-                projets = db.projets.ToList();
+                projets = db.projets.Select(p => new ProjetViewModel
+                {
+                    projet = p
+                }).ToList();
                 model.projets = projets;
                 model.validation = true;
                 //return RedirectToAction("Index");
@@ -54,7 +57,10 @@ namespace documentify.Controllers
                 return View("Index", model);
             }
 
-            projets = db.projets.ToList();           
+            projets = projets = db.projets.Select(p => new ProjetViewModel
+            {
+                projet = p
+            }).ToList();           
             model.projets = projets;
             model.projet = projet;
             model.validation = false;

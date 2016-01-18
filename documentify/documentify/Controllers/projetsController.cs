@@ -58,8 +58,11 @@ namespace documentify.Controllers
             }
 
             HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<projet> projets = new List<projet>();
-            projets = db.projets.ToList();
+            IEnumerable<ProjetViewModel> projets = new List<ProjetViewModel>();
+            projets = projets = db.projets.Select(p => new ProjetViewModel
+            {
+                projet = p
+            }).ToList();
             model.projets = projets;
             model.projet = projet;
 
