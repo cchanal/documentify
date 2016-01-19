@@ -1,7 +1,7 @@
 ﻿@model documentify.ViewModel.HomePageViewModel
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<!-- Create Modal -->
+<div id="myCreateModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -11,8 +11,8 @@
                 <h4 class="modal-title">Nouveau projet</h4>
             </div>
             <div class="modal-body">
-                    @using (Html.BeginForm("CreateProject", "Home"))
-                    {
+                @using (Html.BeginForm("CreateProject", "Home"))
+                {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
