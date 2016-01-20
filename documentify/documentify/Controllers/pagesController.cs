@@ -136,7 +136,7 @@ namespace documentify.Controllers
             model.description = page.description;
             model.id_projet = page.id_projet;
             model.pages = db.projets.Find(page.id_projet).pages;
-            model.sections = page.sections;
+            model.sections = page.sections.OrderBy(s => s.ordre);
 
             return model;
         }
