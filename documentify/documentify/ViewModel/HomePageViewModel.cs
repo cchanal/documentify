@@ -13,6 +13,7 @@ namespace documentify.ViewModel
 
         public bool creation = false;
         public projet projetToDelete = null;
+        public projet projetToEdit = null;
 
         public bool? validation = null;
         public string validationMessage = "";

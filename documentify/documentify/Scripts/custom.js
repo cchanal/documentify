@@ -1,5 +1,9 @@
-﻿function openEditModal(){
+﻿function openCreateModal(){
     $('#myCreateModal').modal('show');
+}
+
+function openEditModal() {
+    $('#myEditModal').modal('show');
 }
 
 function openDeleteModal() {

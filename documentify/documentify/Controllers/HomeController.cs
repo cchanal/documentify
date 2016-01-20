@@ -2,6 +2,7 @@
 using documentify.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -51,6 +52,48 @@ namespace documentify.Controllers
             model = createDefaultHomeViewModel();
             model.projet = projet;
             model.creation = true;
+
+            return View("Index", model);
+        }
+
+        public ActionResult EditProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            projet projet = db.projets.Find(id);
+            if (projet == null)
+            {
+                return HttpNotFound();
+            }
+
+            HomePageViewModel model = createDefaultHomeViewModel();
+            model.projetToEdit = projet;
+
+            return View("Index", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProjectConfirmed([Bind(Include = "id_projet,nom,description")] projet projetToEdit)
+        {
+            HomePageViewModel model = new HomePageViewModel();
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(projetToEdit).State = EntityState.Modified;
+                db.SaveChanges();
+
+                model = createDefaultHomeViewModel();
+                model.validation = true;
+                model.validationMessage = "Projet édité avec succès";
+
+                return View("Index", model);
+            }
+
+            model = createDefaultHomeViewModel();
+            model.projetToEdit = projetToEdit;
 
             return View("Index", model);
         }
@@ -125,7 +168,8 @@ namespace documentify.Controllers
             {
                 projet = p,
                 projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                deletion_url = "/home/DeleteProject/" + p.id_projet
+                deletion_url = "/home/DeleteProject/" + p.id_projet,
+                edition_url = "/home/EditProject/" + p.id_projet
             }).ToList();
 
             model.projets = projets;
