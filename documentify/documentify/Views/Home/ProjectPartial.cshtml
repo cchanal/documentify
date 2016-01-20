@@ -59,11 +59,11 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
                     Êtes vous sûre de supprimer ce projet ?
-                    <br/>
-                    Toutes les pages associées seront supprimée définitivement.
+                    <br />
+                    Toutes les pages associées seront supprimées définitivement.
                 </h4>
             </div>
-            <div class="modal-body">       
+            <div class="modal-body">
                 @if (Model.projetToDelete != null)
                 {
                     <dl class="dl-horizontal">
@@ -82,25 +82,25 @@
                         <dd>
                             @Html.DisplayFor(model => model.projetToDelete.description)
                         </dd>
-                    
+
                         <dt>
-                            Nombre de page(s) : 
+                            Nombre de page(s) :
                         </dt>
 
-                        <dd>           
+                        <dd>
                             @Html.DisplayFor(model => model.projetToDelete.pages.ToList().Count)
                         </dd>
 
                     </dl>
 
-                   @*@using (Html.BeginForm("DeleteProjectConfirmed", "Home"))
-                    {
-                        @Html.AntiForgeryToken()
+                    @*@using (Html.BeginForm("DeleteProjectConfirmed", "Home"))
+                        {
+                            @Html.AntiForgeryToken()
 
-                        <div class="form-actions no-color">
-                            <input type="submit" value="Delete" class="btn btn-danger" /> 
-                        </div>
-                    }*@
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </div>
+                        }*@
 
                     <a class="btn btn-danger" href="/home/DeleteProjectConfirmed/@Model.projetToDelete.id_projet">Supprimer</a>
                 }
