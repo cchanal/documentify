@@ -6,7 +6,7 @@
         <ul class="nav navbar-nav">
             @foreach (var item in Model.pages)
             {
-                <li><a href="@item.page_url" class="@item.isCurrent">@item.titre</a></li>
+                <li @if (@item.isCurrent) { @Html.Raw("class='active'")  }><a href="@item.page_url">@item.titre</a></li>
             }
         </ul>
     </div>

@@ -137,7 +137,7 @@ namespace documentify.Controllers
             model.id_projet = page.id_projet;
 
 
-            IEnumerable<page> pages = db.projets.Find(page.id_projet).pages;
+            IEnumerable<page> pages = db.projets.Find(page.id_projet).pages.OrderBy(p => p.numero);
             IList<PageLinkViewModel> pagesLinks = new List<PageLinkViewModel>();
 
             foreach (page p in pages)
