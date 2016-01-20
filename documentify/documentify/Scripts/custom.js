@@ -1,5 +1,5 @@
-﻿function openModal(){
-    $('#myModal').modal('show');
+﻿function openEditModal(){
+    $('#myCreateModal').modal('show');
 }
 
 function openSuccess() {
