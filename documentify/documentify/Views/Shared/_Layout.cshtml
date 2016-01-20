@@ -23,6 +23,7 @@
                 </button>
                 @Html.ActionLink("Documentify", "Index", "Home", new object { }, new { @class = "navbar-brand" })
             </div>
+            @RenderSection("PageLink", required: false)
         </div><!-- /.container-fluid -->
     </header>
     <div class="container-fluid main">

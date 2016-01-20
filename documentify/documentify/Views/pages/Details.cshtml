@@ -1,44 +1,39 @@
 ﻿@model documentify.ViewModel.PageViewModel
 
+@section PageLink
+{
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            @foreach (var item in Model.pages)
+            {
+                <li><a href="#">@item.titre</a></li>
+            }
+        </ul>
+    </div>
+}
+
 <div class="jumbotron card">
-    <h1>Product Name</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, doloribus.</p>
+    <h1>@Model.titre</h1>
+    <p>@Model.description</p>
 </div>
 <nav class="col-md-3 hidden-xs hidden-sm card">
     <ul>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
+        @foreach (var item in Model.sections)
+        {
+            <li>
+                <a href="#@item.ordre">@item.titre</a>
+            </li>
+        }
     </ul>
 </nav>
 <section class="col-sm-12 col-md-9 card">
-    <article>
-        <h1 id="test">azerty</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ullam.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, soluta.</p>
-    </article>
-    <article>
-        <h1 id="test">azerty 2</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, odit.</p>
-        <p>Error, nemo deserunt! Cum consectetur aliquam, reprehenderit accusamus totam omnis.</p>
-    </article>
-    <article>
-        <h1 id="test">azerty</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, tempore.</p>
-        <p>Repellat vel, magnam neque voluptatem dolorum voluptate nemo at quibusdam!</p>
-    </article>
-    <article>
-        <h1 id="test">azerty</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, velit.</p>
-        <p>Eveniet aspernatur consequuntur tempore facere in dolorem! Asperiores at, a!</p>
-    </article>
-    <article>
-        <h1 id="test">azerty</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, reprehenderit.</p>
-        <p>Accusamus, laudantium. Voluptates tenetur possimus fugiat odit dolorum quaerat! Beatae.</p>
-    </article>
+    @foreach (var item in Model.sections)
+    {
+        <article id="@item.ordre">
+            <h1 id="test">@item.titre</h1>
+            <p>@item.contenu</p>
+        </article>
+    }
 </section>
 
 @section Scripts
