@@ -135,7 +135,29 @@ namespace documentify.Controllers
             model.titre = page.titre;
             model.description = page.description;
             model.id_projet = page.id_projet;
-            model.pages = db.projets.Find(page.id_projet).pages;
+
+
+            IEnumerable<page> pages = db.projets.Find(page.id_projet).pages;
+            IList<PageLinkViewModel> pagesLinks = new List<PageLinkViewModel>();
+
+            foreach (page p in pages)
+            {
+                PageLinkViewModel link = new PageLinkViewModel();
+                link.titre = p.titre;
+                link.page_url = "/pages/Details/" + p.id_page;
+
+                if (page.id_page == p.id_page)
+                {
+                    link.isCurrent = true;
+                }
+                else
+                {
+                    link.isCurrent = false;
+                }
+                pagesLinks.Add(link);
+            }
+
+            model.pages = pagesLinks;
             model.sections = page.sections.OrderBy(s => s.ordre);
 
             return model;

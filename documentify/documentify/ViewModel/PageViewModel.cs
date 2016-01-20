@@ -13,7 +13,7 @@ namespace documentify.ViewModel
         public string titre;
         public string description;
 
-        public IEnumerable<page> pages;
+        public IEnumerable<PageLinkViewModel> pages;
         public IEnumerable<section> sections;
     }
 }

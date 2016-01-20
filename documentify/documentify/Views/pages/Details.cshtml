@@ -6,7 +6,7 @@
         <ul class="nav navbar-nav">
             @foreach (var item in Model.pages)
             {
-                <li><a href="#">@item.titre</a></li>
+                <li><a href="@item.page_url" class="@item.isCurrent">@item.titre</a></li>
             }
         </ul>
     </div>
