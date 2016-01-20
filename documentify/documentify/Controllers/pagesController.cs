@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using documentify.Models;
+using documentify.ViewModel;
 
 namespace documentify.Controllers
 {
@@ -29,11 +30,16 @@ namespace documentify.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             page page = db.pages.Find(id);
+
             if (page == null)
             {
                 return HttpNotFound();
             }
-            return View(page);
+
+            PageViewModel model = createDefaultPageViewModel(page);
+
+
+            return View("Details", model);
         }
 
         // GET: pages/Create
@@ -123,6 +129,18 @@ namespace documentify.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        private PageViewModel createDefaultPageViewModel(page page)
+        {
+            PageViewModel model = new PageViewModel();
+            model.titre = page.titre;
+            model.description = page.description;
+            model.projet = db.projets.Find(page.id_projet);
+            model.pages = model.projet.pages;
+            model.sections = page.sections;
+
+            return model;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
