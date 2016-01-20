@@ -24,6 +24,50 @@ namespace documentify
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/froalaJS").Include(
+                      "~/Scripts/froala/froala_editor.min.js",
+                      "~/Scripts/froala/plugins/align.min.js",
+                      "~/Scripts/froala/plugins/char_counter.min.js",
+                      "~/Scripts/froala/plugins/code_view.min.js",
+                      "~/Scripts/froala/plugins/colors.min.js",
+                      "~/Scripts/froala/plugins/emoticons.min.js",
+                      "~/Scripts/froala/plugins/entities.min.js",
+                      "~/Scripts/froala/plugins/file.min.js",
+                      "~/Scripts/froala/plugins/font_family.min.js",
+                      "~/Scripts/froala/plugins/font_size.min.js",
+                      "~/Scripts/froala/plugins/fullscreen.min.js",
+                      "~/Scripts/froala/plugins/image.min.js",
+                      "~/Scripts/froala/plugins/image_manager.min.js",
+                      "~/Scripts/froala/plugins/inline_style.min.js",
+                      "~/Scripts/froala/plugins/line_breaker.min.js",
+                      "~/Scripts/froala/plugins/link.min.js",
+                      "~/Scripts/froala/plugins/lists.min.js",
+                      "~/Scripts/froala/plugins/paragraph_format.min.js",
+                      "~/Scripts/froala/plugins/paragraph_style.min.js",
+                      "~/Scripts/froala/plugins/quote.min.js",
+                      "~/Scripts/froala/plugins/table.min.js",
+                      "~/Scripts/froala/plugins/save.min.js",
+                      "~/Scripts/froala/plugins/url.min.js",
+                      "~/Scripts/froala/plugins/video.min.js",
+                      "~/Scripts/froala/languages/fr.js"
+                      ));
+
+            bundles.Add(new StyleBundle("~/Content/froalaCSS").Include(
+                      "~/Content/froala/froala_editor.css",
+                      "~/Content/froala/froala_style.css",
+                      "~/Content/froala/plugins/char_counter.min.css",
+                      "~/Content/froala/plugins/code_view.min.css",
+                      "~/Content/froala/plugins/colors.min.css",
+                      "~/Content/froala/plugins/emoticons.min.css",
+                      "~/Content/froala/plugins/file.min.css",
+                      "~/Content/froala/plugins/fullscreen.min.css",
+                      "~/Content/froala/plugins/image.min.css",
+                      "~/Content/froala/plugins/image_manager.min.css",
+                      "~/Content/froala/plugins/line_breaker.min.css",
+                      "~/Content/froala/plugins/table.min.css",
+                      "~/Content/froala/plugins/video.min.css"
+                      ));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/style.css"));
