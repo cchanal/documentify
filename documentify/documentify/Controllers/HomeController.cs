@@ -14,13 +14,7 @@ namespace documentify.Controllers
         private documentifyDataEntities db = new documentifyDataEntities();
         public ActionResult Index()
         {
-            HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel { 
-                projet = p,
-                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                deletion_url = "/home/DeleteProject/" + p.id_projet
-            }).ToList();
-            model.projets = projets;
+            HomePageViewModel model = createDefaultHomeViewModel();
 
             return View(model);
         }
@@ -33,7 +27,6 @@ namespace documentify.Controllers
         public ActionResult CreateProject([Bind(Include = "id_projet,nom,description")] projet projet)
         {
             HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<ProjetViewModel> projets = new List<ProjetViewModel>();
 
             if (ModelState.IsValid)
             {
@@ -48,27 +41,16 @@ namespace documentify.Controllers
 
                 db.SaveChanges();
 
-                projets = db.projets.Select(p => new ProjetViewModel
-                {
-                    projet = p,
-                    projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                    deletion_url = "/home/DeleteProject/" + p.id_projet
-                }).ToList();
-
-                model.projets = projets;
+                model = createDefaultHomeViewModel();
                 model.validation = true;
                 model.validationMessage = "Projet crée avec succès";
 
                 return View("Index", model);
             }
 
-            projets = projets = db.projets.Select(p => new ProjetViewModel
-            {
-                projet = p
-            }).ToList();           
-            model.projets = projets;
+            model = createDefaultHomeViewModel();
             model.projet = projet;
-            model.validation = false;
+            model.creation = true;
 
             return View("Index", model);
         }
@@ -86,15 +68,7 @@ namespace documentify.Controllers
                 return HttpNotFound();
             }
 
-            HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel
-            {
-                projet = p,
-                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                deletion_url = "/home/DeleteProject/" + p.id_projet
-            }).ToList();
-
-            model.projets = projets;
+            HomePageViewModel model = createDefaultHomeViewModel();
             model.projetToDelete = projet;
             
             return View("Index", model);
@@ -102,26 +76,30 @@ namespace documentify.Controllers
 
         public ActionResult DeleteProjectConfirmed(int? id)
         {
-            projet projet = db.projets.Find(id);
-
-            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => y.sous_section.ToList().ForEach(z => db.sous_section.Remove(z))));
-            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => db.sections.Remove(y)));
-            projet.pages.ToList().ForEach(x => db.pages.Remove(x));
-            db.projets.Remove(projet);
-
-            db.SaveChanges();
-
             HomePageViewModel model = new HomePageViewModel();
-            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel
-            {
-                projet = p,
-                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                deletion_url = "/home/DeleteProject/" + p.id_projet
-            }).ToList();
 
-            model.projets = projets;
-            model.validation = true;
-            model.validationMessage = "Projet supprimé avec succès";
+            if (id != null)
+            {
+                projet projet = db.projets.Find(id);
+
+                projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => y.sous_section.ToList().ForEach(z => db.sous_section.Remove(z))));
+                projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => db.sections.Remove(y)));
+                projet.pages.ToList().ForEach(x => db.pages.Remove(x));
+                db.projets.Remove(projet);
+
+                db.SaveChanges();
+
+                model = createDefaultHomeViewModel();
+                model.validation = true;
+                model.validationMessage = "Projet supprimé avec succès";
+            }
+            else
+            {
+                model = createDefaultHomeViewModel();
+                model.validation = false;
+                model.validationMessage = "Echec de la suppression du projet";
+            }
+
 
             return View("Index", model);
         }
@@ -138,6 +116,21 @@ namespace documentify.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private HomePageViewModel createDefaultHomeViewModel()
+        {
+            HomePageViewModel model = new HomePageViewModel();
+            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel
+            {
+                projet = p,
+                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
+                deletion_url = "/home/DeleteProject/" + p.id_projet
+            }).ToList();
+
+            model.projets = projets;
+
+            return model;
         }
     }
 }

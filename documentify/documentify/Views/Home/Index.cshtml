@@ -33,23 +33,28 @@
 
 @section Scripts
 {
-   @if (Model.validation == true)
-   {
-    <script>
-        openSuccess("@Model.validationMessage");
-    </script>
-   }
-   else if (Model.validation == false)
-   {
-    <script>
-        openEditModal();
-    </script>
-   }
-   
-   @if (Model.projetToDelete != null)
-   {
-    <script>
-        openDeleteModal();
-    </script>
+    @if (Model.creation == true)
+    {
+        <script>
+            openEditModal();
+        </script>
+    }
+    @if (Model.projetToDelete != null)
+    {
+        <script>
+            openDeleteModal();
+        </script>
+    }
+    @if (Model.validation == true)
+    {
+        <script>
+            openSuccess("@Model.validationMessage");
+        </script>
+    }
+    else if (Model.validation == false)
+    {
+        <script>
+            openFail("@Model.validationMessage")
+        </script>
    }
 }
