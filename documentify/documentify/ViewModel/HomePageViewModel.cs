@@ -11,5 +11,8 @@ namespace documentify.ViewModel
         public IEnumerable<ProjetViewModel> projets = new List<ProjetViewModel>();
         public projet projet = new projet();
         public bool? validation = null;
+        public string validationMessage = "";
+
+        public projet projetToDelete = null;
     }
 }

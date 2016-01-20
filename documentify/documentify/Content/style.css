@@ -26,3 +26,7 @@ footer {
 .success-message{
     display:none;
 }
+
+.mb20{
+    margin-bottom:20px;
+}

@@ -2,7 +2,12 @@
     $('#myCreateModal').modal('show');
 }
 
-function openSuccess() {
+function openDeleteModal() {
+    $('#myDeleteModal').modal('show');
+}
+
+function openSuccess(message) {
+    $('#success-message').html(message);
     $('#success-message').show();
     setTimeout(closeSuccess, 4000);
 }

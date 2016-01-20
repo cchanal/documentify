@@ -4,28 +4,28 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="card">
-    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#myCreateModal">Créer</a>
-    <span id="success-message" class="field-validation-succes text-success success-message">Projet crée avec succès.</span>
-    <table class="table table-striped table-bordered">
+<a class="btn btn-primary mb20" href="#" data-toggle="modal" data-target="#myCreateModal">Créer</a>
+ 
+<div id="success-message" class="field-validation-succes text-success success-message mb20">Projet crée avec succès.</div>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Description</th>
+    </tr>
+    @foreach (var item in Model.projets)
+    {
         <tr>
-            <th>Nom</th>
-            <th>Description</th>
+            <td>@item.projet.nom</td>
+            <td>@item.projet.description</td>
+            <td>
+                <a href="@item.projet_homepage_url">Voir</a>
+                |
+                <a href="@item.deletion_url">Supprimer</a>
+            </td>
         </tr>
-        @foreach (var item in Model.projets)
-        {
-            <tr>
-                <td>@item.projet.nom</td>
-                <td>@item.projet.description</td>
-                <td>
-                    <a href="@item.projet_homepage_url">Voir</a>
-                    |
-                    <a href="@item.deletion_url">Supprimer</a>
-                </td>
-            </tr>
-        }
-    </table>
-</div>
+    }
+</table>
 
 @Html.Partial("ProjectPartial", Model)
 
@@ -36,13 +36,20 @@
    @if (Model.validation == true)
    {
     <script>
-        openSuccess();
+        openSuccess("@Model.validationMessage");
     </script>
    }
    else if (Model.validation == false)
    {
     <script>
         openEditModal();
+    </script>
+   }
+   
+   @if (Model.projetToDelete != null)
+   {
+    <script>
+        openDeleteModal();
     </script>
    }
 }

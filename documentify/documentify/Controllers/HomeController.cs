@@ -3,6 +3,7 @@ using documentify.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,7 +18,7 @@ namespace documentify.Controllers
             IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel { 
                 projet = p,
                 projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                deletion_url = "/projets/Delete/" + p.id_projet
+                deletion_url = "/home/DeleteProject/" + p.id_projet
             }).ToList();
             model.projets = projets;
 
@@ -51,13 +52,13 @@ namespace documentify.Controllers
                 {
                     projet = p,
                     projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
-                    deletion_url = "/projets/Delete/" + p.id_projet
+                    deletion_url = "/home/DeleteProject/" + p.id_projet
                 }).ToList();
 
                 model.projets = projets;
                 model.validation = true;
-                //return RedirectToAction("Index");
-                //return RedirectToAction("Index", "Home", new { area = "" });
+                model.validationMessage = "Projet crée avec succès";
+
                 return View("Index", model);
             }
 
@@ -68,6 +69,59 @@ namespace documentify.Controllers
             model.projets = projets;
             model.projet = projet;
             model.validation = false;
+
+            return View("Index", model);
+        }
+
+        // GET: projets/Delete/5
+        public ActionResult DeleteProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            projet projet = db.projets.Find(id);
+            if (projet == null)
+            {
+                return HttpNotFound();
+            }
+
+            HomePageViewModel model = new HomePageViewModel();
+            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel
+            {
+                projet = p,
+                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
+                deletion_url = "/home/DeleteProject/" + p.id_projet
+            }).ToList();
+
+            model.projets = projets;
+            model.projetToDelete = projet;
+            
+            return View("Index", model);
+        }
+
+        public ActionResult DeleteProjectConfirmed(int? id)
+        {
+            projet projet = db.projets.Find(id);
+
+            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => y.sous_section.ToList().ForEach(z => db.sous_section.Remove(z))));
+            projet.pages.ToList().ForEach(x => x.sections.ToList().ForEach(y => db.sections.Remove(y)));
+            projet.pages.ToList().ForEach(x => db.pages.Remove(x));
+            db.projets.Remove(projet);
+
+            db.SaveChanges();
+
+            HomePageViewModel model = new HomePageViewModel();
+            IEnumerable<ProjetViewModel> projets = db.projets.Select(p => new ProjetViewModel
+            {
+                projet = p,
+                projet_homepage_url = "/pages/Details/" + p.pages.Where(pa => pa.numero == 0).FirstOrDefault().id_page.ToString(),
+                deletion_url = "/home/DeleteProject/" + p.id_projet
+            }).ToList();
+
+            model.projets = projets;
+            model.validation = true;
+            model.validationMessage = "Projet supprimé avec succès";
 
             return View("Index", model);
         }
