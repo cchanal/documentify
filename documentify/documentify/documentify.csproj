@@ -253,6 +253,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\EditAPI.js" />
     <Content Include="Scripts\froala\froala_editor.min.js" />
     <Content Include="Scripts\froala\languages\ar.js" />
     <Content Include="Scripts\froala\languages\bs.js" />
@@ -402,7 +403,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5312</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

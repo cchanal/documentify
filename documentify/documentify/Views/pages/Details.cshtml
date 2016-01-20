@@ -1,4 +1,4 @@
-﻿@model documentify.Models.page
+﻿@model documentify.ViewModel.PageViewModel
 
 <div class="jumbotron card">
     <h1>Product Name</h1>
@@ -40,3 +40,10 @@
         <p>Accusamus, laudantium. Voluptates tenetur possimus fugiat odit dolorum quaerat! Beatae.</p>
     </article>
 </section>
+
+@section Scripts
+{
+    <script>
+        EditAPI.init()
+    </script>
+}
