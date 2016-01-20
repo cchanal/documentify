@@ -134,8 +134,8 @@ namespace documentify.Controllers
             PageViewModel model = new PageViewModel();
             model.titre = page.titre;
             model.description = page.description;
-            model.projet = db.projets.Find(page.id_projet);
-            model.pages = model.projet.pages;
+            model.id_projet = page.id_projet;
+            model.pages = db.projets.Find(page.id_projet).pages;
             model.sections = page.sections;
 
             return model;
