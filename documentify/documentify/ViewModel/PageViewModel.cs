@@ -9,7 +9,7 @@ namespace documentify.ViewModel
     public class PageViewModel
     {
 
-        public projet projet;
+        public int id_projet;
         public string titre;
         public string description;
 
