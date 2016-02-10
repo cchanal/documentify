@@ -40,13 +40,15 @@
             <p>@item.contenu</p>
         </article>
     }
+    <button class="add-section btn btn-primary center-block"><i class="fa fa-plus"></i>Ajouter une section</button>
 </section>
 @Html.Partial("PagePartial", Model)
 
 @section Scripts
 {
     <script>
-        EditAPI.init()
+        EditAPI.init();
+        PageAPI.init();
     </script>
     @if (Model.creation == true)
     {
