@@ -15,5 +15,11 @@ namespace documentify.ViewModel
 
         public IEnumerable<PageLinkViewModel> pages;
         public IEnumerable<section> sections;
+
+        public bool? validation = null;
+        public bool creation = false;
+        public string validationMessage = "";
+
+        public page page;
     }
 }

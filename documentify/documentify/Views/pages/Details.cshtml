@@ -6,11 +6,17 @@
         <ul class="nav navbar-nav">
             @foreach (var item in Model.pages)
             {
-                <li @if (@item.isCurrent) { @Html.Raw("class='active'")  }><a href="@item.page_url">@item.titre</a></li>
+                <li @if (@item.isCurrent) { @Html.Raw("class='active'")   }><a href="@item.page_url">@item.titre</a></li>
             }
         </ul>
+        <div class="pull-right fcustom">
+            <a href="#" data-toggle="modal" data-target="#myCreateModal">
+                <i class="fa fa-plus-circle"></i>
+            </a>
+        </div>
     </div>
 }
+<div id="success-message" class="field-validation-succes text-success success-message mb20">Projet crée avec succès.</div>
 
 <div class="jumbotron card">
     <h1>@Model.titre</h1>
@@ -35,10 +41,29 @@
         </article>
     }
 </section>
+@Html.Partial("PagePartial", Model)
 
 @section Scripts
 {
     <script>
         EditAPI.init()
     </script>
+    @if (Model.creation == true)
+    {
+        <script>
+            openCreateModal();
+        </script>
+    }
+    @if (Model.validation == true)
+    {
+        <script>
+            openSuccess("@Model.validationMessage");
+        </script>
+    }
+    else if (Model.validation == false)
+    {
+        <script>
+            openFail("@Model.validationMessage")
+        </script>
+    }
 }

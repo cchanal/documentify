@@ -376,6 +376,7 @@
     <Content Include="Views\sous_section\Edit.cshtml" />
     <Content Include="Views\sous_section\Index.cshtml" />
     <Content Include="Views\Home\ProjectPartial.cshtml" />
+    <Content Include="Views\pages\PagePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

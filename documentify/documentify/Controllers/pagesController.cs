@@ -54,17 +54,40 @@ namespace documentify.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_page,titre,description,numero,id_projet")] page page)
+        public ActionResult Create([Bind(Include = "id_projet,numero,titre,description")] page page)
         {
+            PageViewModel model = new PageViewModel();
+
             if (ModelState.IsValid)
             {
+                if (page.titre == null)
+                {
+                    page.titre = "Veuillez saisir un titre";
+                }
+                if (page.description == null)
+                {
+                    page.description = "Veuillez saisir une description";
+                }
+
                 db.pages.Add(page);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                model = createDefaultPageViewModel(page);
+                model.validation = true;
+                model.validationMessage = "Page créee avec succès";
+
+                //return View("Details", model);
+                //TODO DEGEU
+                return Redirect("/pages/Details/" + model.page.id_page);
             }
 
-            ViewBag.id_projet = new SelectList(db.projets, "id_projet", "nom", page.id_projet);
-            return View(page);
+            //TODO : GERER LE CAS ...
+            page homePage = db.pages.Where(p => p.id_projet == page.id_projet && p.id_page == 0).Single();
+            model = createDefaultPageViewModel(homePage);
+            model.page = page;
+            model.creation = true;
+
+            return View("Details", model);
         }
 
         // GET: pages/Edit/5
@@ -129,15 +152,14 @@ namespace documentify.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        private PageViewModel createDefaultPageViewModel(page page)
+        private PageViewModel createDefaultPageViewModel(page currentPage)
         {
             PageViewModel model = new PageViewModel();
-            model.titre = page.titre;
-            model.description = page.description;
-            model.id_projet = page.id_projet;
+            model.titre = currentPage.titre;
+            model.description = currentPage.description;
+            model.id_projet = currentPage.id_projet;
 
-
-            IEnumerable<page> pages = db.projets.Find(page.id_projet).pages.OrderBy(p => p.numero);
+            IEnumerable<page> pages = db.projets.Find(currentPage.id_projet).pages.OrderBy(p => p.numero);
             IList<PageLinkViewModel> pagesLinks = new List<PageLinkViewModel>();
 
             foreach (page p in pages)
@@ -146,7 +168,7 @@ namespace documentify.Controllers
                 link.titre = p.titre;
                 link.page_url = "/pages/Details/" + p.id_page;
 
-                if (page.id_page == p.id_page)
+                if (currentPage.id_page == p.id_page)
                 {
                     link.isCurrent = true;
                 }
@@ -158,7 +180,12 @@ namespace documentify.Controllers
             }
 
             model.pages = pagesLinks;
-            model.sections = page.sections.OrderBy(s => s.ordre);
+            model.sections = currentPage.sections.OrderBy(s => s.ordre);
+
+            model.page = new page();
+            model.page.id_page = currentPage.id_page;
+            model.page.id_projet = currentPage.id_projet;
+            model.page.numero = pages.Max(p => p.numero) + 1;
 
             return model;
         }
